@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Eat and Drink Restaurant</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/signup">Signup</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <section>
+            <h2>Add a New Recipe</h2>
+            <form id="addRecipeForm" action="/addRecipeSubmit" method="POST">
+                <input type="text" id="name" name="name" placeholder="Recipe Name" required>
+                <textarea id="description" name="description" placeholder="Recipe Description" required></textarea>
+                <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" placeholder="Rating" required>
+                <button type="submit">Add Recipe</button>
+            </form>
+        </section>
+        <section>
+            <h2>Recipes</h2>
+            <div id="recipeList">
+                <% recipes.forEach(recipe => { %>
+                    <div class="recipe">
+                        <h3><%= recipe.name %></h3>
+                        <p><%= recipe.description %></p>
+                        <p class="rating">Rating: <%= recipe.rating %> / 5</p>
+                        <form class="editRecipeForm" action="/editRecipe/<%= recipe.id %>" method="POST">
+                            <input type="text" name="name" value="<%= recipe.name %>" required>
+                            <textarea name="description" required><%= recipe.description %></textarea>
+                            <input type="number" name="rating" min="0" max="5" step="0.1" value="<%= recipe.rating %>" required>
+                            <button type="submit">Edit Recipe</button>
+                        </form>
+                        <form class="deleteRecipeForm" action="/deleteRecipe/<%= recipe.id %>" method="POST">
+                            <button type="submit">Delete Recipe</button>
+                        </form>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Eat and Drink Restaurant. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/scripts.js"></script>
+</body>
+</html>
